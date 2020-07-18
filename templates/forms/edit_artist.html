@@ -1,0 +1,81 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Edit Artist{% endblock %}
+{% block content %}
+    <div class="row">
+        <form class="form" method="post" action="/artists/{{ artist.id }}/edit">
+            {{ form.csrf_token() }}
+            <div class="col-sm-6">
+                <h3 class="form-heading">Edit artist <em>{{ artist.name }}</em>
+                    <a href="{{ url_for('index') }}" title="Back to homepage">
+                        <i class="fa fa-home pull-right"></i>
+                    </a>
+                </h3>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    {{ form.name(class_ = 'form-control', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    <label>City & State</label>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            {{ form.city(class_ = 'form-control', placeholder='City', autofocus = true) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.state(class_ = 'form-control', placeholder='State', autofocus = true) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    {{ form.phone(class_ = 'form-control', placeholder='xxx-xxx-xxxx', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    <label for="genres">Genres</label>
+                    <small>Ctrl+Click to select multiple</small>
+                    {{ form.genres(class_ = 'form-control', placeholder='Genres, separated by commas', autofocus = true) }}
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="website">Website</label>
+                    {{ form.website(class_ = 'form-control', placeholder='http://', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    <label for="facebook_link">Facebook Link</label>
+                    {{ form.facebook_link(class_ = 'form-control', placeholder='http://', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    <label for="image_link">Image Link</label>
+                    {{ form.image_link(class_ = 'form-control', placeholder='http://', autofocus = true) }}
+                </div>
+                <div class="form-check">
+                    <label for="seeking_venue" class="form-check-label">Seeking Venue: </label>
+                    {{ form.seeking_venue(class_ = 'form-check-input', autofocus = true) }}
+                </div>
+                <div class="form-group hidden" id="div_seeking_description">
+                    <label for="seeking_description">Seeking Description</label>
+                    {{ form.seeking_description(class_ = 'form-control', placeholder='Looking for shows to perform at in the San Francisco Bay Area!', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    <label for="available_from">Available From</label>
+                    {{ form.available_from(class_ = 'form-control', placeholder='18:00', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    <label for="available_to">Available To</label>
+                    {{ form.available_to(class_ = 'form-control', placeholder='20:00', autofocus = true) }}
+                </div>
+            </div>
+            <input type="submit" value="Edit Artist" class="btn btn-primary btn-lg btn-block">
+        </form>
+    </div>
+    <script>
+        document.getElementById("seeking_venue").onchange = function (e) {
+            if (e.target.checked) document.getElementById("div_seeking_description").classList.remove("hidden");
+            else document.getElementById("div_seeking_description").classList.add("hidden");
+        };
+
+        if (document.getElementById("seeking_venue").checked)
+            document.getElementById("div_seeking_description").classList.remove("hidden");
+    </script>
+
+{% endblock %}
